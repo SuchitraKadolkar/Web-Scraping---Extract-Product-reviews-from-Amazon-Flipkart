@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Product URL Validator</title>
+</head>
+<body>
+  <div class="container" id="formContainer">
+    <h2>Enter Product URL</h2>
+    <form id="urlForm">
+      <input type="url" id="productUrl" placeholder="Paste Amazon or Flipkart product URL" required /><br>
+      <div id="message" class="message"></div>
+      <button type="submit" id="submitBtn">Submit</button>
+    </form>
+  </div>
+
+  <div class="container" id="resultContainer" style="display: none;">
+    <h2>API Response (Page <span id="pageNumber"></span> of <span id="totalPages"></span>)</h2>
+    <div id="loading" style="display:none;">Loading...</div>
+    <pre id="responseOutput"></pre>
+    
+    <div class="button-group">
+      <button id="prevBtn">Previous</button>
+      <button id="nextBtn">Next</button>
+      <button id="backBtn">Back</button>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('urlForm');
+    const productUrlInput = document.getElementById('productUrl');
+    const formContainer = document.getElementById('formContainer');
+    const resultContainer = document.getElementById('resultContainer');
+    const responseOutput = document.getElementById('responseOutput');
+    const pageNumberSpan = document.getElementById('pageNumber');
+    const totalPagesSpan = document.getElementById('totalPages');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const backBtn = document.getElementById('backBtn');
+    const loading = document.getElementById('loading');
+
+    let currentPage = 1;
+    let totalPages = 1;
+    let productUrl = '';
+
+    function setLoading(state) {
+      loading.style.display = state ? 'block' : 'none';
+    }
+
+    function updateButtons() {
+      prevBtn.disabled = currentPage <= 1;
+      nextBtn.disabled = currentPage >= totalPages;
+    }
+
+    function fetchData() {
+      setLoading(true);
+      fetch('http://127.0.0.1:9000/api/extract-reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: productUrl, pageNumber: currentPage })
+      })
+      .then(res => res.json())
+      .then(data => {
+        totalPages = data.content.total_pages
+        pageNumberSpan.textContent = currentPage;
+        totalPagesSpan.textContent = totalPages;
+        responseOutput.textContent = JSON.stringify(data, null, 2);
+        updateButtons();
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Error calling backend');
+      })
+      .finally(() => {
+        setLoading(false);
+        updateButtons();
+      });
+    }
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      productUrl = productUrlInput.value;
+      currentPage = 1;
+      formContainer.style.display = 'none';
+      resultContainer.style.display = 'block';
+      responseOutput.textContent = "";
+      fetchData();
+    });
+
+    nextBtn.addEventListener('click', function() {
+      if (currentPage < totalPages) {
+        currentPage++;
+        responseOutput.textContent = "";
+        fetchData();
+      }
+    });
+
+    prevBtn.addEventListener('click', function() {
+      if (currentPage > 1) {
+        currentPage--;
+        responseOutput.textContent = "";
+        fetchData();
+      }
+    });
+
+    backBtn.addEventListener('click', function() {
+      resultContainer.style.display = 'none';
+      formContainer.style.display = 'block';
+      responseOutput.textContent = "";
+      productUrlInput.value = "";
+    });
+  </script>
+</body>
+</html>

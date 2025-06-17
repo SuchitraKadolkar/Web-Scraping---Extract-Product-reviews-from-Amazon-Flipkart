@@ -1,0 +1,11 @@
+# Other HTML elements
+REVIEW_ELEMENT = 'E3XX7J'
+ALL_REVIEW_BUTTON_ELEMENT = '_6n9Uuq'
+PAGE_COUNT_ELEMENT = 'div._1G0WLw.mpIySA'
+
+# Customer information HTML elements
+RATING_ELEMENT = ['XQDdHH', 'Ga3i8K', '_91BNRY']
+COMMENT_ELEMENT = '_11pzQk'
+NAME_DATE_ELEMENT = '_2NsDsF'
+LOCATION_ELEMENT = 'MztJPv'
+

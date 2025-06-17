@@ -1,0 +1,7 @@
+fastapi
+gunicorn
+uvicorn
+requests
+selenium
+webdriver_manager
+bs4
