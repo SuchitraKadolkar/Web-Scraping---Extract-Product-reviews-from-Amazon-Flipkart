@@ -68,9 +68,8 @@ This is a small web application developed to extract customer reviews from a spe
 6. Constructs the paginated review URL, such as:
 
    ```
+   https://www.flipkart.com/fossil-machine-analog-watch-men/product-reviews/itmeg9efbhqazq6s?pid=WATEG9EFHDYXH83N&lid=LSTWATEG9EFHDYXH83N1FH0F7&marketplace=FLIPKART&page=2
    ```
-
-[https://www.flipkart.com/product-reviews/](https://www.flipkart.com/product-reviews/)<product-id>?page=2
 
 ````
 7. Parses the review page using BeautifulSoup to extract the total number of review pages.
@@ -108,9 +107,8 @@ docker-compose up
 6. Click on Next page button until we match provided page number.
 
    ```
+   https://www.amazon.com/product-reviews/B0B4PQDFCL/ref=cm_cr_dp_d_show_all_btm?ie=UTF8&reviewerType=all_reviews
    ```
-
-[https://www.amazon.com/product-reviews/](https://www.amazon.com/product-reviews/)<product-id>?pageNumber=2
 
 ````
 7. Use Playwright selectors to extract review data from each page.
