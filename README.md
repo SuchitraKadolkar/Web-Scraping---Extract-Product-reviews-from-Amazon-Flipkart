@@ -72,7 +72,6 @@ This is a small web application developed to extract customer reviews from a spe
    https://www.flipkart.com/fossil-machine-analog-watch-men/product-reviews/itmeg9efbhqazq6s?pid=WATEG9EFHDYXH83N&lid=LSTWATEG9EFHDYXH83N1FH0F7&marketplace=FLIPKART&page=2
    ```
 
-````
 7. Parses the review page using BeautifulSoup to extract the total number of review pages.
 8. Extracts each review's details (name, rating, date, comment, location) from the HTML elements.
 9. Returns a JSON response with reviews, total pages, and the current page number.
@@ -111,7 +110,6 @@ docker-compose up
    https://www.amazon.com/product-reviews/B0B4PQDFCL/ref=cm_cr_dp_d_show_all_btm?ie=UTF8&reviewerType=all_reviews
    ```
 
-````
 7. Use Playwright selectors to extract review data from each page.
 8. Return the data in JSON format.
 
@@ -125,7 +123,7 @@ docker-compose up
 ```bash
 cd backend/app/routers/amazon
 ./setup.sh  # It will install necessary packages
-
+````
 # Save Amazon login session
 python amazon_login.py  # Manually log in, then press Enter to save session
 
