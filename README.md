@@ -24,6 +24,7 @@ This is a small web application developed to extract customer reviews from a spe
 * The backend simulates browser interactions to click on "All reviews" or similar links and extract data from multiple paginated pages.
 
 **Flipkart**: Selenium + BeautifulSoup
+
 **Amazon**: Playwright (requires login session)
 
 ---
