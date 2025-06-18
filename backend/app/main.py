@@ -5,7 +5,6 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from routers.flipkart_scraper import FlipkartScrapper
-from routers.amazon_scraper import AmazonScraper
 
 class RequestSchema(BaseModel):
     url: str
@@ -34,7 +33,10 @@ async def extract_reviews(details: RequestSchema):
     if "flipkart.com" in url:
         reviews = await loop.run_in_executor(None, FlipkartScrapper(url).extract_reviews, details.pageNumber)
     elif "amazon.com" or "amazon.in" in url:
-        reviews = await loop.run_in_executor(None, AmazonScraper(url).extract_reviews, details.pageNumber)
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST, 
+            content={"success": False, "message": "Enter flipkart URL only. To get review for amazon run manual scripts."}
+        )
     else:
         return JSONResponse(
             status_code=status.HTTP_400_BAD_REQUEST, 

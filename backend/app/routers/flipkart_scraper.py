@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-from commons.constants import *
+from constants.constants import *
 import time
 import logging
 import requests
@@ -17,11 +17,7 @@ logger = logging.getLogger(__name__)
 class FlipkartScrapper:
     def __init__(self, url):
         self.url = url
-        self.headers = {
-            'User-Agent': 'Use your own user agent',
-            'Accept-Language': 'en-us,en;q=0.5'
-        }
-
+ 
     def extract_reviews(self, pageNumber):
         # Setup Chrome Options
         options = Options()
@@ -41,7 +37,7 @@ class FlipkartScrapper:
 
         try:
             # Check if reviews are exists
-            web_page = requests.get(self.url, headers=self.headers)
+            web_page = requests.get(self.url)
 
             # Parse the HTML content
             soup = BeautifulSoup(web_page.content, 'html.parser')
@@ -69,9 +65,9 @@ class FlipkartScrapper:
             all_reviews_button.click()
             current_url = driver.current_url
             logger.info("Redirected URL:", current_url)
-            time.sleep(3)
+            time.sleep(4)
 
-            web_page = requests.get(current_url, headers=self.headers)
+            web_page = requests.get(current_url)
 
             # Parse the HTML content
             soup = BeautifulSoup(web_page.content, 'html.parser')
@@ -93,7 +89,7 @@ class FlipkartScrapper:
 
           
             pagination_url = current_url + "&page=" + str(pageNumber)
-            web_page = requests.get(pagination_url, headers=self.headers)
+            web_page = requests.get(pagination_url)
 
             # Parse the HTML content
             soup = BeautifulSoup(web_page.content, 'html.parser')
